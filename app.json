@@ -1,0 +1,62 @@
+{
+  "name": "File Sharing Telegram Bot",
+  "description": "Bot File Sharing Yang Dilengkapi Dengan Multi Force Subs",
+  "keywords": [
+    "telegram",
+    "file sharing",
+    "telegram bot"
+  ],
+  "repository": "https://github.com/DoellBarr/FileSharingBot",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Masukkan Bot Token Kamu, Dapatkan Dari https://t.me/BotFather",
+      "value": "",
+      "required": true
+    },
+    "API_ID": {
+      "description": "Masukkan API ID Kamu, Dapatkan Dari https://my.telegram.org/apps",
+      "value": "",
+      "required": true
+    },
+    "API_HASH": {
+      "description": "Masukkan API Hash Kamu, Dapatkan Dari https://my.telegram.org/apps",
+      "value": "",
+      "required": true
+    },
+    "DB_CHANNEL": {
+      "description": "Masukkan Id Channel Kamu Yang Akan Di Gunakan Sebagai Database",
+      "value": "",
+      "required": true
+    },
+    "GROUP_1": {
+        "description": "Masukkan Id Group Kamu Yang Akan Di Gunakan Sebagai Force Subs Group",
+        "value": "",
+        "required": false
+    },
+    "CHANNEL_1": {
+        "description": "Masukkan Id Channel Kamu Yang Akan Di Gunakan Sebagai Force Subs Channel",
+        "value": "",
+        "required": false
+    },
+    "OWNER": {
+      "description": "Masukkan Id Owner Kamu",
+        "value": "",
+        "required": true
+    },
+    "ADMINS": {
+        "description": "Masukkan Id Admin, pisahkan dengan spasi jika lebih dari satu, contoh: 123456789 123456789",
+        "value": "",
+        "required": false
+    },
+    "START_MSG": {
+        "description": "Masukkan Pesan Yang Akan Ditampilkan Ketika Bot Di Aktifkan",
+        "value": "Halo {first}\n\nSaya dapat menyimpan filemu di channel tertentu, dan penegguna lain dapat mengaksesnya",
+        "required": false
+    },
+    "FSUB_MSG": {
+        "description": "Masukkan Pesan Yang Akan Ditampilkan Ketika Penegguna Di Force Sub",
+        "value": "Halo {first}\n\nAnda harus bergabung kedalam Channel/Grup saya untuk menggunakan saya\nSilakan masuk ke channel/grup terlebih dahulu",
+        "required": false
+    }
+  }
+}
