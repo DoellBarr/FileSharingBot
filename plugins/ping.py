@@ -5,7 +5,7 @@ from pyrogram.types import Message
 
 
 @Client.on_message(filters.command("ping"))
-async def ping_(c: Client, m: Message):
+async def ping_(_, m: Message):
     x = await m.reply("Ping....")
     ping = round((dt.now() - m.date).microseconds / int(1e6), 2)
     await x.edit(

@@ -57,6 +57,11 @@
         "description": "Masukkan Pesan Yang Akan Ditampilkan Ketika Penegguna Di Force Sub",
         "value": "Halo {first}\n\nAnda harus bergabung kedalam Channel/Grup saya untuk menggunakan saya\nSilakan masuk ke channel/grup terlebih dahulu",
         "required": false
+    },
+    "LOGGER_GROUP_ID": {
+        "description": "Masukkan Id Group Kamu Yang Akan Di Gunakan Sebagai Logger\nJangan diisi kalo gamau di set.",
+        "value": "",
+        "required": false
     }
   }
 }

@@ -16,10 +16,9 @@ class Client(RawClient):
             plugins={"root": "plugins"}
         )
         self.btn: list = []
-        self.username: str = ""
         self.first_name: str = ""
         self.me = None
-        self.db: types.Chat = None
+        self.db: types.Chat = None  # noqa
         self.logger = logger
         self.b64 = urlsafe_b64encode
         self.b64d = urlsafe_b64decode
@@ -28,7 +27,6 @@ class Client(RawClient):
         self.logger(__name__).info("Starting Bot...")
         await super().start()
         self.me = await self.get_me()
-        self.username = self.me.username
         self.first_name = self.me.first_name
         keyboard = []
         temp = []
@@ -99,7 +97,20 @@ class Client(RawClient):
 
     @staticmethod
     async def idle():
+        logger(__name__).info("Idling...")
         return await idle()
+
+    async def send_logger(self, message: str):
+        try:
+            return await self.send_message(config.logger_group_id, message)
+        except errors.UserNotParticipant:
+            logger(__name__).error(f"{self.first_name} haruslah berada di grup {config.logger_group_id}")
+            logger(__name__).info("Silakan tanyakan kepada @shohih_abdul jika anda membutuhkan bantuan")
+            sys.exit("Bot dimatikan.")
+        except errors.ChannelInvalid:
+            logger(__name__).error(f"Grup dengan id {config.logger_group_id} tidak ditemukan!\nPastikan id grup yang diberikan benar!")
+            logger(__name__).info("Silakan tanyakan kepada @shohih_abdul jika anda membutuhkan bantuan")
+            sys.exit("Bot dimatikan.")
 
 
 bot = Client("bot", config.api_id, config.api_hash, bot_token=config.bot_token)
