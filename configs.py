@@ -27,14 +27,14 @@ class Config:
     api_hash = environ.get('API_HASH')
     bot_token = environ.get('BOT_TOKEN')
     owner = int(environ.get('OWNER'))
-    if admins := environ.get("ADMINS", None):
+    if admins := environ.get("ADMINS", []):
         admins = list(map(int, environ.get('ADMINS').split(' ')))
     for key, val in environ.items():
         if match := btn_re.search(key):
             name = f"{match[1]}_{match[2]}"
             print(f"Menemukan tombol, {name}, Chat Id: {val}")
             fsubs_dict[name] = int(val)
-    if logger_group := environ.get("LOGGER_GROUP_ID", None):
+    if logger_group := environ.get("LOGGER_GROUP_ID", "0"):
         logger_group_id = int(logger_group)
     db_channel = environ.get("DB_CHANNEL")
     start_msg = environ.get("START_MSG")

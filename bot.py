@@ -7,13 +7,14 @@ from typing import Union, Optional
 
 
 class Client(RawClient):
-    def __init__(self, name: str, api_id: Union[str, int], api_hash: str, bot_token: Optional[str] = None):
+    def __init__(self, bot_token: Optional[str] = None):
         super().__init__(
-            name=name,
-            api_id=api_id,
-            api_hash=api_hash,
+            name="bot",
+            api_id=config.api_id,
+            api_hash=config.api_hash,
             bot_token=bot_token,
-            plugins={"root": "plugins"}
+            plugins={"root": "plugins"},
+            in_memory=True
         )
         self.btn: list = []
         self.first_name: str = ""
@@ -113,4 +114,4 @@ class Client(RawClient):
             sys.exit("Bot dimatikan.")
 
 
-bot = Client("bot", config.api_id, config.api_hash, bot_token=config.bot_token)
+bot = Client(config.bot_token)
