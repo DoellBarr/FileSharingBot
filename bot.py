@@ -101,17 +101,18 @@ class Client(RawClient):
         logger(__name__).info("Idling...")
         return await idle()
 
-    async def send_logger(self, message: str):
-        try:
-            return await self.send_message(config.logger_group_id, message)
-        except errors.UserNotParticipant:
-            logger(__name__).error(f"{self.first_name} haruslah berada di grup {config.logger_group_id}")
-            logger(__name__).info("Silakan tanyakan kepada @shohih_abdul jika anda membutuhkan bantuan")
-            sys.exit("Bot dimatikan.")
-        except errors.ChannelInvalid:
-            logger(__name__).error(f"Grup dengan id {config.logger_group_id} tidak ditemukan!\nPastikan id grup yang diberikan benar!")
-            logger(__name__).info("Silakan tanyakan kepada @shohih_abdul jika anda membutuhkan bantuan")
-            sys.exit("Bot dimatikan.")
+    if config.logger_group_id:
+        async def send_logger(self, message: str):
+            try:
+                return await self.send_message(config.logger_group_id, message)
+            except errors.UserNotParticipant:
+                logger(__name__).error(f"{self.first_name} haruslah berada di grup {config.logger_group_id}")
+                logger(__name__).info("Silakan tanyakan kepada @shohih_abdul jika anda membutuhkan bantuan")
+                sys.exit("Bot dimatikan.")
+            except errors.ChannelInvalid:
+                logger(__name__).error(f"Grup dengan id {config.logger_group_id} tidak ditemukan!\nPastikan id grup yang diberikan benar!")
+                logger(__name__).info("Silakan tanyakan kepada @shohih_abdul jika anda membutuhkan bantuan")
+                sys.exit("Bot dimatikan.")
 
 
 bot = Client(config.bot_token)

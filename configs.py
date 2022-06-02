@@ -34,7 +34,7 @@ class Config:
             name = f"{match[1]}_{match[2]}"
             print(f"Menemukan tombol, {name}, Chat Id: {val}")
             fsubs_dict[name] = int(val)
-    if logger_group := environ.get("LOGGER_GROUP_ID", "0"):
+    if logger_group := environ.get("LOGGER_GROUP_ID", None):
         logger_group_id = int(logger_group)
     db_channel = environ.get("DB_CHANNEL")
     start_msg = environ.get("START_MSG")
