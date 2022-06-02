@@ -7,8 +7,7 @@ from pyrogram import filters, types, errors
 
 
 @Client.on_message(
-    filters.incoming
-    & ~filters.command(["start", "help", "ping", "batch"])
+    ~filters.command(["start", "help", "ping", "batch"])
     & filters.private
     & filters.user(config.admins + [config.owner])
 )
