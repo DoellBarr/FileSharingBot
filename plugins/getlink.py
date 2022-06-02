@@ -59,7 +59,7 @@ async def get_msg(c: Client, m: types.Message):
                 or member_status.ADMINISTRATOR
                 or member_status.OWNER
             ):
-                break
+                return await m.reply(f"Halo {m.from_user.first_name}")
     except errors.UserNotParticipant:
         return await m.reply(
             f"Halo {m.from_user.first_name}\nSilakan masuk kedalam semua grup/channel dibawah ini",
