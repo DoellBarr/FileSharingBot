@@ -62,7 +62,7 @@ async def get_msg(c: Client, m: types.Message):
                 break
     except errors.UserNotParticipant:
         return await m.reply(
-            "Silakan masuk kedalam semua grup/channel dibawah ini",
+            f"Halo {m.from_user.first_name}\nSilakan masuk kedalam semua grup/channel dibawah ini",
             reply_markup=markup(c.btn),
         )
     with open("database.json", "r", encoding="utf-8") as f:
