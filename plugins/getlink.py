@@ -88,7 +88,8 @@ async def get_msg(c: Client, m: types.Message):
                 if i == len(keyboard):
                     new_board.append(temp)
             if len(m.command) > 1:
-                new_board.append([btn("Coba lagi", url=m.text)])
+                new_board.append([btn("Coba lagi", url=f"https://t.me/{c.username}?start={m.command[1]}")])
+            print(new_board)
             return await m.reply(
                 f"Halo {m.from_user.first_name}\nSilakan masuk kedalam semua grup/channel dibawah ini",
                 reply_markup=markup(new_board),
