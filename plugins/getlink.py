@@ -59,7 +59,18 @@ async def get_msg(c: Client, m: types.Message):
                 or member_status.ADMINISTRATOR
                 or member_status.OWNER
             ):
-                return await m.reply(f"Halo {m.from_user.first_name}")
+                if len(m.command) <= 1:
+                    return await m.reply(f"Halo {m.from_user.first_name}")
+                with open("database.json", "r", encoding="utf-8") as f:
+                    datas = json.load(f)
+                    for data in datas:
+                        if data["shorten_link"] == m.command[1]:
+                            if isinstance(data["msg_id"], list):
+                                for msg_id in data["msg_id"]:
+                                    await c.copy_message(m.chat.id, data["chat_id"], msg_id)
+                            else:
+                                await c.copy_message(m.chat.id, data["chat_id"], data["msg_id"])
+                            break
         except errors.UserNotParticipant:
             keyboard = []
             temp = []
@@ -76,18 +87,9 @@ async def get_msg(c: Client, m: types.Message):
                     temp = []
                 if i == len(keyboard):
                     new_board.append(temp)
-            new_board.append(btn("Coba lagi", url=m.text))
+            if len(m.command) > 1:
+                new_board.append([btn("Coba lagi", url=m.text)])
             return await m.reply(
                 f"Halo {m.from_user.first_name}\nSilakan masuk kedalam semua grup/channel dibawah ini",
                 reply_markup=markup(new_board),
             )
-    with open("database.json", "r", encoding="utf-8") as f:
-        datas = json.load(f)
-        for data in datas:
-            if data["shorten_link"] == m.command[1]:
-                if isinstance(data["msg_id"], list):
-                    for msg_id in data["msg_id"]:
-                        await c.copy_message(m.chat.id, data["chat_id"], msg_id)
-                else:
-                    await c.copy_message(m.chat.id, data["chat_id"], data["msg_id"])
-                break
