@@ -50,9 +50,9 @@ async def on_sended_msg(c: Client, m: types.Message):
 
 @Client.on_message(filters.command("start"))
 async def get_msg(c: Client, m: types.Message):
-    try:
-        for link in fsubs_dict.values():
-            chat = await c.get_chat(link)
+    for link in fsubs_dict.values():
+        chat = await c.get_chat(link)
+        try:
             member_status = (await c.get_chat_member(chat.id, m.from_user.id)).status
             if (
                 member_status.MEMBER
@@ -60,13 +60,13 @@ async def get_msg(c: Client, m: types.Message):
                 or member_status.OWNER
             ):
                 return await m.reply(f"Halo {m.from_user.first_name}")
-    except errors.UserNotParticipant:
-        button = c.btn
-        button = button.extend([btn("Coba Lagi", url=m.text)])
-        return await m.reply(
-            f"Halo {m.from_user.first_name}\nSilakan masuk kedalam semua grup/channel dibawah ini",
-            reply_markup=markup(button),  # noqa
-        )
+        except errors.UserNotParticipant:
+            button = c.btn
+            button = button.extend([btn("Coba Lagi", url=m.text)])
+            return await m.reply(
+                f"Halo {m.from_user.first_name}\nSilakan masuk kedalam semua grup/channel dibawah ini",
+                reply_markup=markup(button),  # noqa
+            )
     with open("database.json", "r", encoding="utf-8") as f:
         datas = json.load(f)
         for data in datas:
