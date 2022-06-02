@@ -50,9 +50,6 @@ async def on_sended_msg(c: Client, m: types.Message):
 
 @Client.on_message(filters.command("start"))
 async def get_msg(c: Client, m: types.Message):
-    if len(m.command) <= 1:
-        await c.send_logger(f"{m.from_user.mention} melakukan start pada bot")
-        return await m.reply(f"Halo {m.from_user.first_name}")
     try:
         for link in fsubs_dict.values():
             chat = await c.get_chat(link)
