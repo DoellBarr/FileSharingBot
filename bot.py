@@ -3,7 +3,7 @@ import sys
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from configs import fsubs_dict, logger, config, btn
 from pyrogram import Client as RawClient, errors, idle, types
-from typing import Union, Optional
+from typing import Optional
 
 
 class Client(RawClient):
@@ -16,7 +16,6 @@ class Client(RawClient):
             plugins={"root": "plugins"},
             in_memory=True
         )
-        self.btn: list = []
         self.first_name: str = ""
         self.me = None
         self.db: types.Chat = None  # noqa
@@ -29,8 +28,6 @@ class Client(RawClient):
         await super().start()
         self.me = await self.get_me()
         self.first_name = self.me.first_name
-        keyboard = []
-        temp = []
         for category, link in fsubs_dict.items():
             category = category.capitalize().replace("_", " ")
             try:
@@ -55,23 +52,11 @@ class Client(RawClient):
                 logger(__name__).info("Silakan tanyakan kepada @shohih_abdul jika anda membutuhkan bantuan")
                 sys.exit("Bot dimatikan.")
             await asyncio.sleep(1)
-            invite_link = await chat.export_invite_link()
-            if member.status.ADMINISTRATOR:
-                keyboard.append(btn(category, url=invite_link))
-            else:
+            if not member.status.ADMINISTRATOR:
                 logger(__name__).error(f"{self.first_name} harus menjadi admin di {chat.title}")
                 logger(__name__).info("Silakan tanyakan kepada @shohih_abdul jika anda membutuhkan bantuan")
                 logger(__name__).info("Bot Dimatikan.")
                 await self.stop()
-        new_keyboard = []
-        for i, board in enumerate(keyboard, start=1):
-            temp.append(board)
-            if i % 3 == 0:
-                new_keyboard.append(temp)
-                temp = []
-            if i == len(keyboard):
-                new_keyboard.append(temp)
-        self.btn = new_keyboard
         if not config.db_channel:
             logger(__name__).error("Channel database tidak ditemukan!")
             logger(__name__).info("Silakan tanyakan kepada @shohih_abdul jika anda membutuhkan bantuan")

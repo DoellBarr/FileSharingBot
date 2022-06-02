@@ -61,11 +61,25 @@ async def get_msg(c: Client, m: types.Message):
             ):
                 return await m.reply(f"Halo {m.from_user.first_name}")
         except errors.UserNotParticipant:
-            bb = c.btn
-            bb.append(btn("Coba lagi", url=m.text))
+            keyboard = []
+            temp = []
+            new_board = []
+            for category, linkk in fsubs_dict.items():
+                category = category.capitalize().replace("_", " ")
+                chat = await c.get_chat(linkk)
+                invite_link = await chat.export_invite_link()
+                keyboard.append(btn(category, url=invite_link))
+            for i, board in enumerate(keyboard, start=1):
+                temp.append(board)
+                if i % 3 == 0:
+                    new_board.append(temp)
+                    temp = []
+                if i == len(keyboard):
+                    new_board.append(temp)
+            new_board.append(btn("Coba lagi", url=m.text))
             return await m.reply(
                 f"Halo {m.from_user.first_name}\nSilakan masuk kedalam semua grup/channel dibawah ini",
-                reply_markup=markup(bb),
+                reply_markup=markup(new_board),
             )
     with open("database.json", "r", encoding="utf-8") as f:
         datas = json.load(f)
