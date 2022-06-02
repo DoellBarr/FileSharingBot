@@ -36,6 +36,8 @@ class Config:
             fsubs_dict[name] = int(val)
     if logger_group := environ.get("LOGGER_GROUP_ID", None):
         logger_group_id = int(logger_group)
+    else:
+        logger_group_id = None
     db_channel = environ.get("DB_CHANNEL")
     start_msg = environ.get("START_MSG")
     fsub_msg = environ.get("FSUB_MSG")
