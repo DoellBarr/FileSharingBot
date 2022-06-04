@@ -38,7 +38,7 @@ class Config:
         logger_group_id = int(logger_group)
     else:
         logger_group_id = None
-    db_channel = environ.get("DB_CHANNEL")
+    db_channel = int(environ.get("DB_CHANNEL", "0"))
     start_msg = environ.get("START_MSG")
     fsub_msg = environ.get("FSUB_MSG")
 
